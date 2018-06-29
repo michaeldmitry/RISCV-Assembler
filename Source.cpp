@@ -1,13 +1,13 @@
 #include<iostream>
 using namespace std;
 #include<string>
+#include "Colors.h"
 #include<fstream>
 #include<iomanip>
 #include <map>
 #include "Instruction.h"
 #include "R_Instructions.h"
 #include "I_Instructions.h"
-
 
 map<string, Instruction*> instructions;
 
@@ -171,17 +171,13 @@ void readFile(string filename) {
 	if (!inp.fail()) {
 		while (!inp.eof()) {
 			getline(inp, c);
-			cout << c << endl;
 			auto i = instructions.find(Key(c)); //testing for map2
 			if (i == instructions.end())
 			//Will be replaced by Helper::emitError(..)
 			cout << "Instruction undefined\n";
 			else
-			{
-		//	i->second->execute(c.substr(6, 26));
 			i->second->execute(c);
 
-			}
 		}
 	}
 
