@@ -10,7 +10,6 @@ using namespace std;
 
 
 map<string, Instruction*> instructions;
-map<string, Instruction*> instructions2;
 
 void init() {
 	//R Type
@@ -26,15 +25,15 @@ void init() {
 	instructions.insert(make_pair("00000000010110011", new Sll));
 
 	//I,S,B-types
-	instructions2.insert(make_pair("0000010011", new Addi));
-	instructions2.insert(make_pair("0100010011", new Slti));
-	instructions2.insert(make_pair("0110010011", new Sltiu));
-	instructions2.insert(make_pair("1000010011", new Xori));
-	instructions2.insert(make_pair("1100010011", new Ori));
-	instructions2.insert(make_pair("1110010011", new Andi));
-	instructions2.insert(make_pair("0010010011", new Slli));
-	instructions2.insert(make_pair("1010010011", new Srli));
-	instructions2.insert(make_pair("1010010011", new Srai));  
+	instructions.insert(make_pair("0000010011", new Addi));
+	instructions.insert(make_pair("0100010011", new Slti));
+	instructions.insert(make_pair("0110010011", new Sltiu));
+	instructions.insert(make_pair("1000010011", new Xori));
+	instructions.insert(make_pair("1100010011", new Ori));
+	instructions.insert(make_pair("1110010011", new Andi));
+	instructions.insert(make_pair("0010010011", new Slli));
+	instructions.insert(make_pair("1010010011", new Srli));
+	instructions.insert(make_pair("1010010011", new Srai));  
 
 
 
@@ -163,7 +162,7 @@ string Key(string word) {
 	if (op == "0110011") return (word.substr(0, 7) + word.substr(17, 3) + op);
 	else if (op == "0110111" || op == "1101111") return op;
 	return (word.substr(17, 3) + op);
-	
+
 }
 void readFile(string filename) {
 	ifstream inp;
@@ -173,19 +172,19 @@ void readFile(string filename) {
 		while (!inp.eof()) {
 			getline(inp, c);
 			cout << c << endl;
-			auto i = instructions2.find(Key(c)); //testing for map2
-			if (i == instructions2.end())
-				//Will be replaced by Helper::emitError(..)
-				cout << "Instruction undefined\n";
+			auto i = instructions.find(Key(c)); //testing for map2
+			if (i == instructions.end())
+			//Will be replaced by Helper::emitError(..)
+			cout << "Instruction undefined\n";
 			else
 			{
-				//i->second->execute(c.substr(6, 26));
-				i->second->execute(c);
+		//	i->second->execute(c.substr(6, 26));
+			i->second->execute(c);
 
 			}
 		}
 	}
-	
+
 
 	inp.close();
 }
