@@ -6,12 +6,36 @@ using namespace std;
 #include <map>
 #include "Instruction.h"
 #include "R_Instructions.h"
+#include "I_Instructions.h"
 
 
 map<string, Instruction*> instructions;
+map<string, Instruction*> instructions2;
+
 void init() {
 	//R Type
-	instructions.insert(make_pair("000000000110011", new Add));
+	instructions.insert(make_pair("00000000000110011", new Add));
+	instructions.insert(make_pair("01000000000110011", new Sub));
+	instructions.insert(make_pair("00000001110110011", new And));
+	instructions.insert(make_pair("00000001100110011", new Or));
+	instructions.insert(make_pair("00000001000110011", new Xor));
+	instructions.insert(make_pair("00000000100110011", new Slt));
+	instructions.insert(make_pair("00000000110110011", new Sltu));
+	instructions.insert(make_pair("01000001010110011", new Sra));
+	instructions.insert(make_pair("00000001010110011", new Srl));
+	instructions.insert(make_pair("00000000010110011", new Sll));
+
+	//I,S,B-types
+	instructions2.insert(make_pair("0000010011", new Addi));
+	instructions2.insert(make_pair("0100010011", new Slti));
+	instructions2.insert(make_pair("0110010011", new Sltiu));
+	instructions2.insert(make_pair("1000010011", new Xori));
+	instructions2.insert(make_pair("1100010011", new Ori));
+	instructions2.insert(make_pair("1110010011", new Andi));
+	instructions2.insert(make_pair("0010010011", new Slli));
+	instructions2.insert(make_pair("1010010011", new Srli));
+	instructions2.insert(make_pair("1010010011", new Srai));  
+
 
 
 }
@@ -134,10 +158,12 @@ void init() {
 //}
 
 string Key(string word) {
+
 	string op = word.substr(25, 7);
-	if (op == "0110011") return (word.substr(0, 6) + word.substr(17, 2) + op);
+	if (op == "0110011") return (word.substr(0, 7) + word.substr(17, 3) + op);
 	else if (op == "0110111" || op == "1101111") return op;
-	return (word.substr(12, 2) + op);
+	return (word.substr(17, 3) + op);
+	
 }
 void readFile(string filename) {
 	ifstream inp;
@@ -146,24 +172,34 @@ void readFile(string filename) {
 	if (!inp.fail()) {
 		while (!inp.eof()) {
 			getline(inp, c);
-			auto i = instructions.find(Key(c));
-			if (i == instructions.end())
+			cout << c << endl;
+			auto i = instructions2.find(Key(c)); //testing for map2
+			if (i == instructions2.end())
 				//Will be replaced by Helper::emitError(..)
 				cout << "Instruction undefined\n";
 			else
-			i->second->execute(c.substr(6, 26));
+			{
+				//i->second->execute(c.substr(6, 26));
+				i->second->execute(c);
+
+			}
 		}
 	}
+	
+
 	inp.close();
 }
 
 
 int main() {
-	/*registers[1] = -60;
-	registers[2] = 2;*/
+
+	//registers[1] = -60;
+	//registers[2] = 2;
 
 	init();
-	string file = "text.txt";
+
+	string file = "Text.txt";
+
 	readFile(file);
 
 	system("pause");
