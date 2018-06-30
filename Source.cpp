@@ -1,7 +1,7 @@
 #include<iostream>
 using namespace std;
 #include<string>
-#include "Colors.h"
+//#include "Colors.h"
 #include<fstream>
 #include<iomanip>
 #include <map>
@@ -10,7 +10,7 @@ using namespace std;
 #include "I_Instructions.h"
 
 map<string, Instruction*> instructions;
-
+ 
 void init() {
 	//R Type
 	instructions.insert(make_pair("00000000000110011", new Add));
@@ -34,7 +34,7 @@ void init() {
 	instructions.insert(make_pair("0010010011", new Slli));
 	instructions.insert(make_pair("1010010011", new Srli));
 	instructions.insert(make_pair("1010010011", new Srai));  
-
+	instructions.insert(make_pair("0100000011", new Lw));
 
 
 }
@@ -188,10 +188,16 @@ void readFile(string filename) {
 
 int main() {
 
-	//registers[1] = -60;
-	//registers[2] = 2;
-
+	registers[1] = 0;
+	registers[2] = 2;
 	init();
+
+	//for testing
+	memory.push_back(583 & 255);
+	memory.push_back(583 & 65280);
+	memory.push_back(583 & 16711680);
+	memory.push_back(583 & 4278190080);
+
 
 	string file = "Text.txt";
 

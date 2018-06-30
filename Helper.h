@@ -1,8 +1,9 @@
 #include <string>
+#include <vector>
 #pragma once
 #ifndef HelperClass
 int registers[32] = { 0 };
-
+vector<int> memory;
 struct Helper {
 	static int Decimal(std::string sub) {
 		int decimalNumber = 0;
@@ -16,10 +17,28 @@ struct Helper {
 		}
 		return decimalNumber;
 	}
-	static void emitError(string error) {
-		cout << error << endl;
-		exit(-1);
+	
+	static string toNeg(std::string sub)
+	{
+		bool flag = false;
+		for (int i = sub.size() - 1; i >= 0; i--)
+		{
+
+			if (flag)
+			{
+				if (sub[i] == '0')
+					sub[i] = '1';
+				else
+					sub[i] = '0';
+			}
+			if (sub[i] == '1')
+				flag = true;
+				
+		}
+		return sub;
 	}
+	
+
 	static void printRegisters(int rs1, int rs2, int rd) {
 		/*cout << rang::bg::green << "Op-Code\n";
 		cout << rang::bg::magenta << "RS1\n";
@@ -29,6 +48,7 @@ struct Helper {
 		cout << rang::bg::cyan << "Funct3\n";
 		cout << rang::bg::gray << "Funct7\n";*/
 
+		/*
 		for (int i = 0; i < 32; i++) {
 			if (i == rd)
 				cout << rang::style::bold << rang::bg::red;
@@ -42,6 +62,20 @@ struct Helper {
 		}
 
 		cout << "------------------------------------------" << endl;
+		*/
+
+		for (int i = 0; i < 32; i++) {
+			
+			cout << "x" << i << setw(7) << registers[i] << endl;
+		}
+
+		cout << "------------------------------------------" << endl;
+	}
+
+
+	static void emitError(string error) {
+		cout << error << endl;
+		exit(-1);
 	}
 };
 #endif

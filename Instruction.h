@@ -15,8 +15,11 @@ struct Instruction {
 	int imm;
 	int shift;
 	int first7;
+
 	void execute(std::string word){
+		/*
 		cout << rang::style::bold << "Type:" << type << "\tName:" << name << endl;
+		*/
 		cout << word << endl;
 		executeType(word);
 		Helper::printRegisters(rs1, rs2, rd);

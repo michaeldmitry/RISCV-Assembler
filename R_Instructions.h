@@ -5,12 +5,14 @@
 struct R_Instruction :  Instruction {
 	R_Instruction() { type = "R Type Instruction"; }
 	void executeType(std::string word) {
+		/*
 		cout << left << rang::bg::cyan << setw(7) << "Fn7";
 		cout << rang::bg::yellow << setw(5) << "RS2";
 		cout << rang::bg::magenta << setw(5) << "RS1";
 		cout << rang::bg::cyan << setw(3) << "Fn3";
 		cout << rang::bg::red << setw(5) << "RD";
 		cout << rang::bg::green << setw(6) << "Op-Code\n" << rang::bg::reset;
+		*/
 
 		rs1 = Helper::Decimal(word.substr(12, 5));
 		rs2 = Helper::Decimal(word.substr(7, 5));
